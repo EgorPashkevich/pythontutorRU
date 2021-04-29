@@ -1,0 +1,5 @@
+a = int(input())
+b = int(input())
+x = int(input())
+y = int(input())
+print('yes') if a == x or b == y else print('no')
