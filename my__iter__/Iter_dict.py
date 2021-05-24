@@ -1,3 +1,6 @@
+# итератор принимает список, сверяет поочереди каждые 2 интекса и складывает их, записывая в словарь,
+# и делает 2 словаря один с числами, второй со сроками
+
 class Iter_dict():
     def __init__(self, a):
         self.a = a
@@ -23,7 +26,7 @@ class Iter_dict():
         return self.main_dict
 
 
-x = Iter_dict(input().split())
+x = Iter_dict(input('Введите через пробел что-нибудь: ').split())
 j = {}
 for i in x:
     j = i
