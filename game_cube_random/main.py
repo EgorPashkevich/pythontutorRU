@@ -1,5 +1,6 @@
 import random
 
+
 class Game:
     def __init__(self):
         self.player_1 = 0
@@ -13,16 +14,19 @@ class Game:
             self.random_dict['glass number:' + str(i + 1)] = random.randint(1, 4)
         for i in self.random_dict:
             self.list_glass.append(i)
-            return self.random_dict, self.list_glass
+        return self.random_dict, self.list_glass
 
     def glass_selection(self):
         print(' ; '.join(self.list_glass))
-        a = input()
+        a = input('выбери: ')
+        if a not in self.list_glass:
+            print('нет')
+            Game.glass_selection(self)
         self.list_glass.remove(a)
         return self.random_dict[a]
 
     def add_to_player_1(self):
-        self.player_1 = self.player_1 + Game.glass_selection(self)
+        self.player_1 = self.player_1 + glass_selection(self)
         return self.player_1
 
     def add_to_player_2(self):
@@ -30,7 +34,7 @@ class Game:
         return self.player_2
 
     def start(self):
-        while self.list_glass is False:
+        while self.list_glass is True:
             Game.add_to_player_1(self)
             Game.add_to_player_2(self)
         if self.player_1 > self.player_2:
@@ -41,8 +45,10 @@ class Game:
             print('no winner')
 
 
-round1 = Game
+round1 = Game()
 round1.glass_up()
+print(round1.glass_up())
+round1.start()
 
 
 
