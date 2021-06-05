@@ -3,54 +3,75 @@ import random
 
 class Game:
     def __init__(self):
-        self.player_1 = 0
-        self.player_2 = 0
-        self.glass = 4
-        self.random_dict = dict()
-        self.list_glass = []
+        self.numbers_player = int(input('number of players: '))
+        self.name_players = [input('Player № ' + str(i + 1) + ' enter your name: ') for i in range(self.numbers_player)]
+        self.glass = int(input('number of glasses: '))
+        self.random_dict = {'glass number:' + str(i + 1): random.randint(1, 6) for i in range(self.glass)}
+        self.list_glass = [i for i in self.random_dict]
+        self.dict_players_point = {i: 0 for i in self.name_players}
 
-    def glass_up(self):
-        for i in range(self.glass):
-            self.random_dict['glass number:' + str(i + 1)] = random.randint(1, 4)
-        for i in self.random_dict:
-            self.list_glass.append(i)
-        return self.random_dict, self.list_glass
+    def assigning_points_to_player(self):
+        print('Select a glass: ' + ' | '.join(self.list_glass))
+        glass = input('choose: ')
+        if glass not in self.list_glass:
+            print('!!! ERROR, choose from the list !!!')
+            self.assigning_points_to_player()
+        else:
+            self.list_glass.remove(glass)
+            return self.random_dict[glass]
 
-    def glass_selection(self):
-        print(' ; '.join(self.list_glass))
-        a = input('выбери: ')
-        if a not in self.list_glass:
-            print('нет')
-            Game.glass_selection(self)
-        self.list_glass.remove(a)
-        return self.random_dict[a]
+    def assigning_points_to_bot(self):
+        print('Select a glass: ' + ' | '.join(self.list_glass))
+        glass = random.choice(self.list_glass)
+        print('choose: ' + glass)
+        self.list_glass.remove(glass)
+        return self.random_dict[glass]
 
-    def add_to_player_1(self):
-        self.player_1 = self.player_1 + glass_selection(self)
-        return self.player_1
+    # def assigning_names_is_classes(self):     ПОКА НЕ СМОТРИ, ПОХЖЕ БУДУТ ВОПРОСЫ
+    #     for i in self.name_players:           ПОКА НЕ СМОТРИ, ПОХЖЕ БУДУТ ВОПРОСЫ
+    #         i = Player(i)                     ПОКА НЕ СМОТРИ, ПОХЖЕ БУДУТ ВОПРОСЫ
 
-    def add_to_player_2(self):
-        self.player_2 = self.player_2 + Game.glass_selection(self)
-        return self.player_2
+    def sorted_name_players(self):
+        empty_list = []
+        count = len(self.name_players)
+        while bool(self.name_players):
+            random_name = random.choice(self.name_players)
+            empty_list.append(random_name)
+            self.name_players.remove(random_name)
+        self.name_players = empty_list
+        return self.name_players
 
     def start(self):
-        while self.list_glass is True:
-            Game.add_to_player_1(self)
-            Game.add_to_player_2(self)
-        if self.player_1 > self.player_2:
-            print('WINNER PLAYER № 1')
-        elif self.player_1 < self.player_2:
-            print('WINNER PLAYER № 2')
-        else:
-            print('no winner')
+        # self.assigning_names_is_classes()
+        global winner
+        self.sorted_name_players()
+        while bool(self.list_glass):
+            for i in self.name_players:
+                if i == 'bot':
+                    print('Play ' + i)
+                    self.dict_players_point[i] += self.assigning_points_to_bot()
+                    print(self.dict_players_point)
+                else:
+                    print('Play ' + i)
+                    self.dict_players_point[i] += self.assigning_points_to_player()
+                    print(self.dict_players_point)
+        winner_point = 0
+        for k, v in self.dict_players_point.items():
+            if v > winner_point:
+                winner_point = v
+                winner = k
+        print('WINNER ' + winner)
+
+
+# class Player(Game):                               ПОКА НЕ СМОТРИ, ПОХЖЕ БУДУТ ВОПРОСЫ
+#     def __init__(self, name):
+#         super().__init__()
+#         self.name = name
+#         self.points = 0
+#
+#     def get_point(self):
+#         self.points += self.assigning_points_to_player()
 
 
 round1 = Game()
-round1.glass_up()
-print(round1.glass_up())
 round1.start()
-
-
-
-
-
