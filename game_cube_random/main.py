@@ -6,7 +6,7 @@ class Game:
         self.numbers_player = int(input('number of players: '))
         self.name_players = [input('Player № ' + str(i + 1) + ' enter your name(to play the bot, enter "bot"): ') for i in range(self.numbers_player)]
         self.glass = int(input('number of glasses(multiple of the number of players): '))
-        self.random_dict = {'glass number:' + str(i + 1): random.randint(1, 4) for i in range(self.glass)}
+        self.random_dict = {'glass number:' + str(i + 1): random.randint(1, 6) for i in range(self.glass)}
         self.list_glass = [i for i in self.random_dict]
         self.glass_a = 'glass number:'
         # self.dict_players_point = {i: 0 for i in self.name_players}
